@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
     testDir: './tests',
     fullyParallel: true,
-    reporter: 'html',
+    reporter: [['html', { open: 'never' }]],
     use: {
         baseURL: 'https://enotes.pointschool.ru/',
         trace: 'on-first-retry',
