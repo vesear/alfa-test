@@ -1,24 +1,24 @@
-import { expect, Locator } from '@playwright/test';
-import { APP_URL } from '../config';
+import { Locator } from '@playwright/test';
+import { test, expect } from '../fixtures/baseFixture';
 import { CartPage } from '../pageObjects/cartPage';
-import getRandomElementArray from '../utils/getRandomElementArray';
-import { test } from '../fixtures/baseFixture';
 import { NoteItem } from '../pageObjects/mainPage/components/noteItem';
+import getRandomElementArray from '../utils/getRandomElementArray';
+import { APP_URL } from '../config';
 
-const ITEMS_COUNT_TO_BE_IN_CART = '1';
+const ITEMS_COUNT = '1';
 
-test('Go to empty cart', async ({ page, mainPage }) => {
+test('TC-2: Go to cart with 1 non-promo item.', async ({ page, mainPage, loginPage }) => {
     const cartPage = new CartPage(page);
 
     await mainPage.waitForNoteListVisible();
 
-    const allItems = await mainPage.getNoteItems({ hasDiscount: true });
+    const allItems = await mainPage.getNoteItems({ hasDiscount: false });
     const itemToBeAddedToCart = getRandomElementArray<Locator>(allItems);
-    const noteItemComponent = new NoteItem(page, itemToBeAddedToCart);
+    const noteItemComponent = new NoteItem(itemToBeAddedToCart);
     const itemInfo = await noteItemComponent.getInfo();
 
-    await mainPage.addNoteItemToCart(itemToBeAddedToCart);
-    await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT_TO_BE_IN_CART);
+    await noteItemComponent.clickBuyButton();
+    await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT);
 
     const cartDropDown = await mainPage.NavBar.clickOpenCartDropDown();
 
@@ -32,7 +32,7 @@ test('Go to empty cart', async ({ page, mainPage }) => {
 
     expect(itemInfo.name).toBe(cartItemInfo.itemTitle);
     expect(itemInfo.actualPrice).toBe(cartItemInfo.itemPrice);
-    expect(cartItemInfo.itemCount).toBe(ITEMS_COUNT_TO_BE_IN_CART);
+    expect(cartItemInfo.itemCount).toBe(ITEMS_COUNT);
     expect(cartTotalPrice).toBe(itemInfo.actualPrice);
 
     await cartDropDown.goToCart();
@@ -40,8 +40,7 @@ test('Go to empty cart', async ({ page, mainPage }) => {
     const currentUrl = page.url();
 
     expect(currentUrl).toBe(APP_URL + cartPage.url);
-
-    await page.pause();
 });
+
 
 
