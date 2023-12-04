@@ -17,8 +17,13 @@ export class CartDropDown {
         this.goToCartBtn = page.locator('//a[text()="Перейти в корзину"]');
     }
 
-    async waitForOpened() {
-        await this.cartDropDown.waitFor({ state: 'visible' });
+    async isOpened() {
+        try {
+            await this.cartDropDown.waitFor({ state: 'visible' });
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     async getCartItems() {

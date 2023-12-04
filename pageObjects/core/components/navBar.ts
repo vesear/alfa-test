@@ -3,19 +3,23 @@ import { CartDropDown } from './cartDropDown';
 
 export class NavBar {
     private readonly page: Page;
-    private readonly navBar: Locator;
-    private readonly cartContainer: Locator;
-    private readonly cartBadge: Locator;
-    private readonly openCartDropDown: Locator;
+    private readonly cartContainer;
+    private readonly cartBadge;
+    private readonly openCartDropDown;
+    private readonly userDropDown;
 
     constructor(page: Page) {
         this.page = page;
-        this.navBar = page.locator('#navbarNav');
         this.cartContainer = page.locator('#basketContainer');
         this.cartBadge = this.cartContainer.locator(
             "//span[contains(@class, 'basket-count-items')]"
         );
         this.openCartDropDown = page.locator('#dropdownBasket');
+        this.userDropDown = page.locator("//*[@id='dropdownUser']//div[@class='text-uppercase']");
+    }
+
+    async getUserName() {
+        return this.userDropDown;
     }
 
     async getCartBadgeCount() {
@@ -23,12 +27,12 @@ export class NavBar {
     }
 
     async clickOpenCartDropDown() {
-        // DEVNOTE: Timeout needed to wait for badge render due to an error
+        // DEVNOTE: Reload needed to wait for badge render due to an error
         //          while opening empty cart
-        await this.page.pause();
+        await this.page.reload();
         await this.openCartDropDown.click();
         const cartDropDown = new CartDropDown(this.page);
-        await cartDropDown.waitForOpened();
+        await cartDropDown.isOpened();
         return cartDropDown;
     }
 }
