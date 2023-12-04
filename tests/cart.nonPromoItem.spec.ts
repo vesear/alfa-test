@@ -1,6 +1,5 @@
-import { expect, Locator, Page } from '@playwright/test';
-import { LoginPage } from '../pageObjects/loginPage';
-import { APP_URL, user } from '../config';
+import { expect, Locator } from '@playwright/test';
+import { APP_URL } from '../config';
 import { MainPage } from '../pageObjects/mainPage/mainPage';
 import { CartPage } from '../pageObjects/cartPage';
 import getRandomElementArray from '../utils/getRandomElementArray';
@@ -9,7 +8,7 @@ import { NoteItem } from '../pageObjects/mainPage/components/noteItem';
 
 const ITEMS_COUNT_TO_BE_IN_CART = '1';
 
-test('Go to empty cart', async ({ page, loginPage, mainPage }) => {
+test('Go to empty cart', async ({ page, mainPage }) => {
     const cartPage = new CartPage(page);
 
     await mainPage.waitForNoteListVisible();
@@ -19,10 +18,8 @@ test('Go to empty cart', async ({ page, loginPage, mainPage }) => {
     const noteItemComponent = new NoteItem(page, itemToBeAddedToCart);
     const itemInfo = await noteItemComponent.getInfo();
 
-    console.log({ itemInfo });
-
     await mainPage.addNoteItemToCart(itemToBeAddedToCart);
-    //await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT_TO_BE_IN_CART);
+    await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT_TO_BE_IN_CART);
 
     const cartDropDown = await mainPage.NavBar.clickOpenCartDropDown();
 
