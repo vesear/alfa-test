@@ -2,7 +2,6 @@ import { Locator, Page } from '@playwright/test';
 import extractNumbersFromString from '../../../utils/extractNumbersFromString';
 
 export class CartDropDown {
-    private readonly page: Page;
     private readonly cartDropDown: Locator;
     private readonly cartItem: Locator;
     private readonly cartItemTitle = "//span[@class='basket-item-title']";
