@@ -1,11 +1,12 @@
 import { type Page, type Locator } from '@playwright/test';
+import { User } from '../config';
 
 export class LoginPage {
-    readonly page: Page;
-    readonly url: string = '/login';
-    readonly loginInputLocator: Locator;
-    readonly passwordInputLocator: Locator;
-    readonly signInButtonLocator: Locator;
+    private readonly url: string = 'login';
+    private readonly page: Page;
+    private readonly loginInputLocator: Locator;
+    private readonly passwordInputLocator: Locator;
+    private readonly signInButtonLocator: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -18,7 +19,7 @@ export class LoginPage {
         await this.page.goto(this.url);
     }
 
-    async login({ username, password }) {
+    async login({ username, password }: User) {
         await this.loginInputLocator.pressSequentially(username);
         await this.passwordInputLocator.pressSequentially(password);
         await this.signInButtonLocator.click();

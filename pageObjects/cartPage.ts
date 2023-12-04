@@ -1,8 +1,9 @@
 import { Locator, Page } from '@playwright/test';
 
 export class CartPage {
-    readonly page: Page;
-    readonly siteErrorLocator: Locator;
+    public readonly url = 'basket';
+    private readonly page: Page;
+    private readonly siteErrorLocator: Locator;
 
     constructor(page: Page) {
         this.page = page;
