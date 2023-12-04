@@ -1,6 +1,5 @@
 import { expect, Locator } from '@playwright/test';
 import { APP_URL } from '../config';
-import { MainPage } from '../pageObjects/mainPage/mainPage';
 import { CartPage } from '../pageObjects/cartPage';
 import getRandomElementArray from '../utils/getRandomElementArray';
 import { test } from '../fixtures/baseFixture';
