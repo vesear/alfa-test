@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 import { CartDropDown } from './cartDropDown';
 
 export class NavBar {
-    private readonly page: Page;
+    private readonly page;
     private readonly cartContainer;
     private readonly cartBadge;
     private readonly openCartDropDown;

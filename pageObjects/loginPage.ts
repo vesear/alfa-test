@@ -1,13 +1,13 @@
-import { type Page, type Locator } from '@playwright/test';
+import { type Page } from '@playwright/test';
 import { User } from '../config';
 import Routes from '../api/constants/routes';
 
 export class LoginPage {
-    private readonly url: string = Routes.Login;
-    private readonly page: Page;
-    private readonly loginInputLocator: Locator;
-    private readonly passwordInputLocator: Locator;
-    private readonly signInButtonLocator: Locator;
+    private readonly url = Routes.Login;
+    private readonly page;
+    private readonly loginInputLocator;
+    private readonly passwordInputLocator;
+    private readonly signInButtonLocator;
 
     constructor(page: Page) {
         this.page = page;

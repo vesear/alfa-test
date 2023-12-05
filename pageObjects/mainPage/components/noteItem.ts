@@ -3,12 +3,12 @@ import extractNumbersFromString from '../../../utils/extractNumbersFromString';
 
 export class NoteItem {
     private readonly page;
-    private readonly productType: Locator;
-    private readonly productName: Locator;
-    private readonly productPrice: Locator;
-    private readonly productEnterCount: Locator;
-    private readonly productCount: Locator;
-    private readonly buyButton: Locator;
+    private readonly productType;
+    private readonly productName;
+    private readonly productPrice;
+    private readonly productEnterCount;
+    private readonly productCount;
+    private readonly buyButton;
 
     constructor(page: Page, itemContainerLocator: Locator) {
         this.page = page;

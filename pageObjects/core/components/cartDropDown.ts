@@ -2,13 +2,13 @@ import { Locator, Page } from '@playwright/test';
 import extractNumbersFromString from '../../../utils/extractNumbersFromString';
 
 export class CartDropDown {
-    private readonly cartDropDown: Locator;
-    private readonly cartItem: Locator;
+    private readonly cartDropDown;
+    private readonly cartItem;
     private readonly cartItemTitle = "//span[@class='basket-item-title']";
     private readonly cartItemPrice = "//span[@class='basket-item-price']";
     private readonly cartItemCount = '//span[contains(@class,"basket-item-count")]';
-    private readonly cartPrice: Locator;
-    private readonly goToCartBtn: Locator;
+    private readonly cartPrice;
+    private readonly goToCartBtn;
 
     constructor(page: Page) {
         this.cartItem = page.locator('//li[contains(@class,"basket-item")]');
