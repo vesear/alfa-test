@@ -6,7 +6,7 @@ export class CartPage {
     private readonly siteErrorLocator;
 
     constructor(page: Page) {
-        this.siteErrorLocator = page.locator('//div[@class="site-error"]');
+        this.siteErrorLocator = page.locator('.site-error');
     }
 
     async getSiteErrorMessage() {
