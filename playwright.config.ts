@@ -4,7 +4,7 @@ import { APP_URL } from './config';
 export default defineConfig({
     testDir: './tests',
     fullyParallel: true,
-    reporter: [['html', { open: 'never' }]],
+    reporter: [['html', { open: 'never' }], ['allure-playwright']],
     use: {
         baseURL: APP_URL,
         trace: 'on-first-retry',
