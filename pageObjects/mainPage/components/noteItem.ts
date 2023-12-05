@@ -17,12 +17,8 @@ export class NoteItem {
         this.productPrice = itemContainerLocator.locator(
             "//span[contains(@class, 'product_price')]"
         );
-        this.productEnterCount = itemContainerLocator.locator(
-            '//input[@name="product-enter-count"]'
-        );
-        this.productCount = itemContainerLocator.locator(
-            "//span[contains(@class,'product_count')]"
-        );
+        this.productEnterCount = itemContainerLocator.locator('input[name="product-enter-count"]');
+        this.productCount = itemContainerLocator.locator("span[class*='product_count']");
         this.buyButton = itemContainerLocator.locator(
             "//button[contains(@class,'actionBuyProduct')]"
         );
