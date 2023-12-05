@@ -2,6 +2,8 @@ import { test as base } from '@playwright/test';
 import { LoginPage } from '../pageObjects/loginPage';
 import { MainPage } from '../pageObjects/mainPage/mainPage';
 import { CartPage } from '../pageObjects/cartPage';
+import clearBasket from '../api/services/clearBasket';
+import useApiAuthorize from '../api/useApiAuthorize';
 import { user } from '../config';
 
 type PageObjects = {
@@ -19,7 +21,11 @@ export const test = base.extend<PageObjects>({
     },
 
     mainPage: async ({ page }, use) => {
+        const token = await useApiAuthorize(page);
+        await clearBasket({ page, token });
+        await page.goto('');
         const mainPage = new MainPage(page);
+        await page.pause();
         await use(mainPage);
     },
 

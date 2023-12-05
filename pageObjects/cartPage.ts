@@ -1,12 +1,11 @@
 import { Locator, Page } from '@playwright/test';
+import Routes from '../api/constants/routes';
 
 export class CartPage {
-    public readonly url = 'basket';
-    private readonly page: Page;
+    public readonly url = Routes.Basket;
     private readonly siteErrorLocator: Locator;
 
     constructor(page: Page) {
-        this.page = page;
         this.siteErrorLocator = page.locator('//div[@class="site-error"]');
     }
 
