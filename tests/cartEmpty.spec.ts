@@ -1,7 +1,7 @@
 import { expect, test } from '../fixtures/baseFixture';
 import { APP_URL, user } from '../config';
 
-test('TC-1: Go to empty cart', async ({ page, loginPage, cartPage, mainPage }) => {
+test('TC-1: Go to empty cart', async ({ page, cartPage, mainPage }) => {
     await expect(await mainPage.NavBar.getUserName()).toHaveText(user.username);
 
     const cartDropDown = await mainPage.NavBar.clickOpenCartDropDown();

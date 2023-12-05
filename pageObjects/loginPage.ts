@@ -1,8 +1,9 @@
 import { type Page, type Locator } from '@playwright/test';
 import { User } from '../config';
+import Routes from '../api/constants/routes';
 
 export class LoginPage {
-    private readonly url: string = 'login';
+    private readonly url: string = Routes.Login;
     private readonly page: Page;
     private readonly loginInputLocator: Locator;
     private readonly passwordInputLocator: Locator;

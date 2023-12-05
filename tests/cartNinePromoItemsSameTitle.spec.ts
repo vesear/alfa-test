@@ -8,7 +8,6 @@ const ITEMS_COUNT = '9';
 test('TC-5: Go to cart with 9 promotional items of the same title.', async ({
     page,
     mainPage,
-    loginPage,
     cartPage,
 }) => {
     await mainPage.waitForNoteListVisible();
@@ -27,8 +26,7 @@ test('TC-5: Go to cart with 9 promotional items of the same title.', async ({
     await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT);
 
     const cartDropDown = await mainPage.NavBar.clickOpenCartDropDown();
-    const itemsInCart = await cartDropDown.getCartItems();
-    const firstItem = itemsInCart[1];
+    const [firstItem] = await cartDropDown.getCartItems();
     const cartItemInfo = await cartDropDown.getItemInfo(firstItem);
     const cartTotalPrice = await cartDropDown.getTotalPrice();
 

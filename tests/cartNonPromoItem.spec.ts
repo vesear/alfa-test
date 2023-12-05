@@ -7,7 +7,7 @@ import { APP_URL } from '../config';
 
 const ITEMS_COUNT = '1';
 
-test('TC-2: Go to cart with 1 non-promo item.', async ({ page, mainPage, loginPage }) => {
+test('TC-2: Go to cart with 1 non-promo item.', async ({ page, mainPage }) => {
     const cartPage = new CartPage(page);
 
     await mainPage.waitForNoteListVisible();
