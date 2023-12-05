@@ -1,4 +1,4 @@
-import { Locator } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { test, expect } from '../fixtures/baseFixture';
 import { NoteItem } from '../pageObjects/mainPage/components/noteItem';
 import { APP_URL } from '../config';
@@ -15,6 +15,7 @@ test('TC-5: Go to cart with 9 promotional items of the same title.', async ({
     const itemsLocatorArray = await mainPage.getNoteItems({ hasDiscount: true });
 
     const { neededNoteItem, neededNoteItemInfo } = await findItemWithSufficientQuantity(
+        page,
         itemsLocatorArray,
         parseInt(ITEMS_COUNT)
     );
@@ -26,6 +27,9 @@ test('TC-5: Go to cart with 9 promotional items of the same title.', async ({
     await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT);
 
     const cartDropDown = await mainPage.NavBar.clickOpenCartDropDown();
+
+    expect(await cartDropDown.isOpened()).toBe(true);
+
     const [firstItem] = await cartDropDown.getCartItems();
     const cartItemInfo = await cartDropDown.getItemInfo(firstItem);
     const cartTotalPrice = await cartDropDown.getTotalPrice();
@@ -47,14 +51,17 @@ function calculatePrice(itemPrice: string, count: string) {
     return (parseInt(itemPrice) * parseInt(count)).toString();
 }
 
-async function findItemWithSufficientQuantity(itemsLocatorArray: Locator[], minQuantity: number) {
+async function findItemWithSufficientQuantity(
+    page: Page,
+    itemsLocatorArray: Locator[],
+    minQuantity: number
+) {
     let neededNoteItem = null;
     let neededNoteItemInfo = null;
 
     for (let itemLocator of itemsLocatorArray) {
-        const noteItem = new NoteItem(itemLocator);
+        const noteItem = new NoteItem(page, itemLocator);
         const itemInfo = await noteItem.getInfo();
-        console.log({ itemInfo });
 
         if (parseInt(itemInfo.quantityInWarehouse) >= minQuantity) {
             neededNoteItem = noteItem;

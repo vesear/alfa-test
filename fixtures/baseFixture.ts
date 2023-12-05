@@ -25,7 +25,6 @@ export const test = base.extend<PageObjects>({
         await clearBasket({ page, token });
         await page.goto('');
         const mainPage = new MainPage(page);
-        await page.pause();
         await use(mainPage);
     },
 
