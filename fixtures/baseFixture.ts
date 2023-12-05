@@ -13,6 +13,10 @@ type PageObjects = {
 };
 
 export const test = base.extend<PageObjects>({
+    /**
+     * The use of UI login is deprecated, use useApiAuthorize instead.
+     * @deprecated
+     */
     loginPage: async ({ page }, use) => {
         const loginPage = new LoginPage(page);
         await loginPage.goto();
@@ -25,7 +29,6 @@ export const test = base.extend<PageObjects>({
         await clearBasket({ page, token });
         await page.goto('');
         const mainPage = new MainPage(page);
-        await page.pause();
         await use(mainPage);
     },
 

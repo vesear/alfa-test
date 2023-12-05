@@ -1,15 +1,17 @@
-import { Locator } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import extractNumbersFromString from '../../../utils/extractNumbersFromString';
 
 export class NoteItem {
-    private readonly productType: Locator;
-    private readonly productName: Locator;
-    private readonly productPrice: Locator;
-    private readonly productEnterCount: Locator;
-    private readonly productCount: Locator;
-    private readonly buyButton: Locator;
+    private readonly page;
+    private readonly productType;
+    private readonly productName;
+    private readonly productPrice;
+    private readonly productEnterCount;
+    private readonly productCount;
+    private readonly buyButton;
 
-    constructor(itemContainerLocator: Locator) {
+    constructor(page: Page, itemContainerLocator: Locator) {
+        this.page = page;
         this.productType = itemContainerLocator.locator("//small[@class='product_type']");
         this.productName = itemContainerLocator.locator("//div[contains(@class,'product_name')]");
         this.productPrice = itemContainerLocator.locator(
@@ -64,5 +66,8 @@ export class NoteItem {
 
     async clickBuyButton() {
         await this.buyButton.click();
+        // DEVNOTE: Reload needed to wait for badge render due to an error
+        //          while opening empty cart
+        await this.page.reload();
     }
 }

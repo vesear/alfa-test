@@ -1,8 +1,8 @@
-import { Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { CartDropDown } from './cartDropDown';
 
 export class NavBar {
-    private readonly page: Page;
+    private readonly page;
     private readonly cartContainer;
     private readonly cartBadge;
     private readonly openCartDropDown;
@@ -27,12 +27,7 @@ export class NavBar {
     }
 
     async clickOpenCartDropDown() {
-        // DEVNOTE: Reload needed to wait for badge render due to an error
-        //          while opening empty cart
-        await this.page.reload();
         await this.openCartDropDown.click();
-        const cartDropDown = new CartDropDown(this.page);
-        await cartDropDown.isOpened();
-        return cartDropDown;
+        return new CartDropDown(this.page);
     }
 }

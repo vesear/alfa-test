@@ -1,8 +1,8 @@
-import { Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { BasePage } from '../core/basePage';
 
 export class MainPage extends BasePage {
-    private readonly noteListRow: Locator;
+    private readonly noteListRow;
 
     constructor(public readonly page: Page) {
         super(page);
