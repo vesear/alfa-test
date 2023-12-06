@@ -61,9 +61,10 @@ export class NoteItem {
     }
 
     async clickBuyButton() {
-        await this.buyButton.click();
-        // DEVNOTE: Reload needed to wait for badge render due to an error
-        //          while opening empty cart
-        await this.page.reload();
+        try {
+            await this.buyButton.click();
+        } catch (e) {
+            await this.buyButton.dispatchEvent('click');
+        }
     }
 }

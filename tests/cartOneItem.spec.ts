@@ -21,17 +21,21 @@ for (const { testCase, hasDiscount } of testData) {
 
         await mainPage.waitForNoteListVisible();
 
-        const allItems = await mainPage.getNoteItems({ hasDiscount });
-        const itemToBeAddedToCart = getRandomElementArray<Locator>(allItems);
+        const foundedItems = await mainPage.getAllMatchingNoteItems({
+            hasDiscount,
+            neededCount: parseInt(ITEMS_COUNT),
+        });
+
+        const itemToBeAddedToCart = getRandomElementArray<Locator>(foundedItems);
         const noteItemComponent = new NoteItem(page, itemToBeAddedToCart);
         const itemInfo = await noteItemComponent.getInfo();
 
         await noteItemComponent.clickBuyButton();
-        await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT);
+        expect.soft(await mainPage.NavBar.waitForCartBadgeToBeVisible(ITEMS_COUNT)).toBe(true);
 
         const cartDropDown = await mainPage.NavBar.clickOpenCartDropDown();
 
-        expect(await cartDropDown.isOpened()).toBe(true);
+        expect.soft(await cartDropDown.isOpened()).toBe(true);
 
         const [firstItem] = await cartDropDown.getCartItems();
 
@@ -39,18 +43,19 @@ for (const { testCase, hasDiscount } of testData) {
 
         const cartTotalPrice = await cartDropDown.getTotalPrice();
 
-        expect(itemInfo.name).toBe(cartItemInfo.itemTitle);
-        expect(itemInfo.actualPrice).toBe(cartItemInfo.itemPrice);
-        expect(cartItemInfo.itemCount).toBe(ITEMS_COUNT);
-        expect(cartTotalPrice).toBe(itemInfo.actualPrice);
+        expect.soft(itemInfo.name).toBe(cartItemInfo.itemTitle);
+        expect.soft(itemInfo.actualPrice).toBe(cartItemInfo.itemPrice);
+        expect.soft(cartItemInfo.itemCount).toBe(ITEMS_COUNT);
+        expect.soft(cartTotalPrice).toBe(itemInfo.actualPrice);
 
         await cartDropDown.goToCart();
 
         const currentUrl = page.url();
 
-        expect(currentUrl).toBe(APP_URL + cartPage.url);
+        expect.soft(currentUrl).toBe(APP_URL + cartPage.url);
     });
 }
+
 
 
 

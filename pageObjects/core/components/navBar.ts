@@ -26,6 +26,19 @@ export class NavBar {
         return this.cartBadge;
     }
 
+    async waitForCartBadgeToBeVisible(count: number | string) {
+        try {
+            await this.page
+                .locator(
+                    `//span[contains(@class,'basket-count-items') and contains(text(),"${count}")]`
+                )
+                .waitFor({ state: 'visible' });
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
     async clickOpenCartDropDown() {
         await this.openCartDropDown.click();
         return new CartDropDown(this.page);
