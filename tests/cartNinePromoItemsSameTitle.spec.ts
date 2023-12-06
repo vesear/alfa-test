@@ -24,27 +24,27 @@ test('TC-5: Go to cart with 9 promotional items of the same title.', async ({
     await neededNoteItem.clickBuyButton();
     await page.reload();
 
-    await expect(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT);
+    await expect.soft(await mainPage.NavBar.getCartBadgeCount()).toHaveText(ITEMS_COUNT);
 
     const cartDropDown = await mainPage.NavBar.clickOpenCartDropDown();
 
-    expect(await cartDropDown.isOpened()).toBe(true);
+    expect.soft(await cartDropDown.isOpened()).toBe(true);
 
     const [firstItem] = await cartDropDown.getCartItems();
     const cartItemInfo = await cartDropDown.getItemInfo(firstItem);
     const cartTotalPrice = await cartDropDown.getTotalPrice();
 
-    expect(neededNoteItemInfo.name).toBe(cartItemInfo.itemTitle);
-    expect(calculatePrice(neededNoteItemInfo.actualPrice, ITEMS_COUNT)).toBe(
-        cartItemInfo.itemPrice
-    );
-    expect(cartItemInfo.itemCount).toBe(ITEMS_COUNT);
-    expect(cartTotalPrice).toBe(calculatePrice(neededNoteItemInfo.actualPrice, ITEMS_COUNT));
+    expect.soft(neededNoteItemInfo.name).toBe(cartItemInfo.itemTitle);
+    expect
+        .soft(calculatePrice(neededNoteItemInfo.actualPrice, ITEMS_COUNT))
+        .toBe(cartItemInfo.itemPrice);
+    expect.soft(cartItemInfo.itemCount).toBe(ITEMS_COUNT);
+    expect.soft(cartTotalPrice).toBe(calculatePrice(neededNoteItemInfo.actualPrice, ITEMS_COUNT));
 
     await cartDropDown.goToCart();
 
     const currentUrl = page.url();
-    expect(currentUrl).toBe(APP_URL + cartPage.url);
+    expect.soft(currentUrl).toBe(APP_URL + cartPage.url);
 });
 
 function calculatePrice(itemPrice: string, count: string) {
