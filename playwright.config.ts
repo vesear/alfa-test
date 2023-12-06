@@ -14,5 +14,6 @@ export default defineConfig({
         launchOptions: {
             args: ['--start-maximized'],
         },
+        screenshot: 'only-on-failure',
     },
 });
